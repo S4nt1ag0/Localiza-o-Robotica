@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="mode" default="odom"/>
+  <arg name="wheel_odom_topic" default="/husky_velocity_controller/odom"/>
+  <arg name="imu_topic" default="/imu/data"/>
+  <arg name="fix_topic" default="/fix"/>
+
+  <include file="$(find localiza_o_robotica)/launch/localization.launch">
+    <arg name="mode" value="$(arg mode)"/>
+    <arg name="wheel_odom_topic" value="$(arg wheel_odom_topic)"/>
+    <arg name="imu_topic" value="$(arg imu_topic)"/>
+    <arg name="fix_topic" value="$(arg fix_topic)"/>
+  </include>
+</launch>
