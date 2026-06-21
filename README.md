@@ -115,7 +115,3 @@ O no `localization_metrics.py` compara `/odometry/filtered` com `/gt/odom` e cal
 - erro final de posicao;
 - RMSE de orientacao em yaw;
 - erro final de orientacao em yaw.
-
-<!-- ## Discussao esperada dos resultados
-
-A configuracao apenas com odometria tende a acumular deriva ao longo do tempo. Com IMU, a estimativa de orientacao melhora e a trajetoria costuma ficar mais estavel em curvas. Com GPS, a posicao absoluta ajuda a reduzir o erro acumulado, principalmente em trajetorias longas, mas a qualidade final depende do ruido e da taxa do sensor GPS. DEU TUDO ERRADO PAPAI -->
