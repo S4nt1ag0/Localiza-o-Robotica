@@ -35,66 +35,75 @@ catkin build localiza_o_robotica
 source devel/setup.bash
 ```
 
-Este workspace ja foi criado com `catkin build`. Nao misture com
-`catkin_make`, porque ele vai recusar o build space existente e o pacote novo
-nao sera registrado no `devel/setup.bash`.
-
-Abra o mundo simulado do LaR/Gazebo com o Husky em outro terminal. Depois execute uma configuracao por vez:
-
-```bash
-roslaunch localiza_o_robotica localization.launch mode:=odom
-roslaunch localiza_o_robotica localization.launch mode:=odom_imu
-roslaunch localiza_o_robotica localization.launch mode:=odom_imu_gps
-```
-
-Se os topicos do simulador tiverem nomes diferentes, passe-os como argumentos:
-
-```bash
-roslaunch localiza_o_robotica localization.launch \
-  mode:=odom_imu_gps \
-  wheel_odom_topic:=/husky_velocity_controller/odom \
-  imu_topic:=/imu/data \
-  fix_topic:=/fix
-```
-
-Finalize o launch com `Ctrl+C` para gravar automaticamente os arquivos em `results/`.
-
-
 ## Gravando uma trajetoria para comparar
 
-Com o `roscore` e o Gazebo rodando, grave uma trajetoria uma unica vez:
+Abra quatro terminais. No host, antes de abrir as interfaces graficas do Docker,
+libere o X11:
 
 ```bash
-cd ~/catkin_ws
-source devel/setup.bash
+xhost +local:docker
+```
+
+Em cada terminal que entrar no container, rode a preparacao:
+
+```bash
+docker exec -it ros_lar_run bash
+export LIBGL_ALWAYS_SOFTWARE=1
+source /opt/ros/noetic/setup.bash
+source ~/catkin_ws/devel/setup.bash
+```
+
+Terminal 1:
+
+```bash
+roscore
+```
+
+Terminal 2:
+
+```bash
+roslaunch lar_gazebo lar_husky.launch
+```
+
+Terminal 3:
+
+```bash
+rosrun rqt_robot_steering rqt_robot_steering
+```
+
+Na interface do `rqt_robot_steering`, selecione o topico de comando do Husky,
+normalmente `/husky_velocity_controller/cmd_vel` ou `/cmd_vel`.
+
+Terminal 4:
+
+```bash
 roslaunch localiza_o_robotica record_trajectory.launch \
   bag:=$(rospack find localiza_o_robotica)/bags/husky_trajectory.bag
 ```
 
-Enquanto esse launch estiver rodando, mova o Husky pelo mapa. Quando terminar, use
-`Ctrl+C`. O bag vai conter os topicos normalizados `/wheel/odom`, `/imu/data`,
-`/fix` e `/gt/odom`.
+Manipule o robo com o joystick gerado no Terminal 3. Depois de um tempo, pare a
+gravacao no Terminal 4 com `Ctrl+C`. O bag vai conter os topicos normalizados
+`/wheel/odom`, `/imu/data`, `/fix` e `/gt/odom`.
 
-Depois compare os tres metodos usando exatamente a mesma gravacao:
+Em seguida, use a gravacao para comparar os tres metodos. Rode um comando por
+vez:
 
 ```bash
 roslaunch localiza_o_robotica replay_bag.launch mode:=odom
 roslaunch localiza_o_robotica replay_bag.launch mode:=odom_imu
 roslaunch localiza_o_robotica replay_bag.launch mode:=odom_imu_gps
+rosrun localiza_o_robotica compare_results.py
 ```
 
 Cada replay termina sozinho quando o bag acaba e grava os arquivos em `results/`:
 
 ```bash
-cat $(rospack find localiza_o_robotica)/results/odom_summary.txt
-cat $(rospack find localiza_o_robotica)/results/odom_imu_summary.txt
-cat $(rospack find localiza_o_robotica)/results/odom_imu_gps_summary.txt
-```
-
-Ou gere uma tabela direta:
-
-```bash
-rosrun localiza_o_robotica compare_results.py
+results/<modo>_metrics.csv
+results/<modo>_summary.txt
+results/<modo>_plot.png
+results/comparison_position_error.png
+results/comparison_yaw_error.png
+results/comparison_trajectories.png
 ```
 
 ## Metricas geradas
@@ -107,6 +116,6 @@ O no `localization_metrics.py` compara `/odometry/filtered` com `/gt/odom` e cal
 - RMSE de orientacao em yaw;
 - erro final de orientacao em yaw.
 
-## Discussao esperada dos resultados
+<!-- ## Discussao esperada dos resultados
 
-A configuracao apenas com odometria tende a acumular deriva ao longo do tempo. Com IMU, a estimativa de orientacao melhora e a trajetoria costuma ficar mais estavel em curvas. Com GPS, a posicao absoluta ajuda a reduzir o erro acumulado, principalmente em trajetorias longas, mas a qualidade final depende do ruido e da taxa do sensor GPS.
+A configuracao apenas com odometria tende a acumular deriva ao longo do tempo. Com IMU, a estimativa de orientacao melhora e a trajetoria costuma ficar mais estavel em curvas. Com GPS, a posicao absoluta ajuda a reduzir o erro acumulado, principalmente em trajetorias longas, mas a qualidade final depende do ruido e da taxa do sensor GPS. DEU TUDO ERRADO PAPAI -->
