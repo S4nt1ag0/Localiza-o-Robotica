@@ -10,6 +10,9 @@ class GroundTruthOdomPublisher(object):
         self.frame_id = rospy.get_param("~frame_id", "odom")
         self.child_frame_id = rospy.get_param("~child_frame_id", "base_link_gt")
         self.rate_hz = rospy.get_param("~rate", 30.0)
+        self.offset_x = rospy.get_param("~offset_x", 0.0)
+        self.offset_y = rospy.get_param("~offset_y", 0.0)
+        self.offset_z = rospy.get_param("~offset_z", 0.0)
         self.pub = rospy.Publisher("/gt/odom", Odometry, queue_size=10)
         rospy.wait_for_service("/gazebo/get_model_state")
         self.get_state = rospy.ServiceProxy("/gazebo/get_model_state", GetModelState)
@@ -34,6 +37,9 @@ class GroundTruthOdomPublisher(object):
             msg.header.frame_id = self.frame_id
             msg.child_frame_id = self.child_frame_id
             msg.pose.pose = state.pose
+            msg.pose.pose.position.x += self.offset_x
+            msg.pose.pose.position.y += self.offset_y
+            msg.pose.pose.position.z += self.offset_z
             msg.twist.twist = state.twist
             self.pub.publish(msg)
             rate.sleep()

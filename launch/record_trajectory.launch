@@ -5,8 +5,11 @@
   <arg name="imu_topic" default="/imu/data"/>
   <arg name="fix_topic" default="/navsat/fix"/>
   <arg name="gt_topic" default="/gazebo_ground_truth/odom"/>
-  <arg name="use_gazebo_ground_truth_topic" default="true"/>
+  <arg name="use_gazebo_ground_truth_topic" default="false"/>
   <arg name="model_name" default="husky"/>
+  <arg name="gt_offset_x" default="-4.65"/>
+  <arg name="gt_offset_y" default="-3.0"/>
+  <arg name="gt_offset_z" default="-0.192"/>
 
   <group if="$(eval arg(&quot;wheel_odom_topic&quot;) != &quot;/wheel/odom&quot;)">
     <node pkg="topic_tools" type="relay" name="relay_record_wheel_odom"
@@ -31,6 +34,9 @@
   <group unless="$(arg use_gazebo_ground_truth_topic)">
     <node pkg="localiza_o_robotica" type="gt_odom_publisher.py" name="gt_odom_publisher" output="screen">
       <param name="model_name" value="$(arg model_name)"/>
+      <param name="offset_x" value="$(arg gt_offset_x)"/>
+      <param name="offset_y" value="$(arg gt_offset_y)"/>
+      <param name="offset_z" value="$(arg gt_offset_z)"/>
     </node>
   </group>
 

@@ -4,8 +4,8 @@
   <arg name="bag" default="$(find localiza_o_robotica)/bags/husky_trajectory.bag"/>
   <arg name="rate" default="1.0"/>
   <arg name="output_dir" default="$(find localiza_o_robotica)/results"/>
-  <arg name="gt_offset_x" default="-4.65"/>
-  <arg name="gt_offset_y" default="-3.0"/>
+  <arg name="gt_offset_x" default="0.0"/>
+  <arg name="gt_offset_y" default="0.0"/>
 
   <param name="/use_sim_time" value="true"/>
 
