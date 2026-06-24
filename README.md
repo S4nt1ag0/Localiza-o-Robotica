@@ -41,7 +41,7 @@ Dentro do container, clone este repositorio dentro de `~/catkin_ws/src/`:
 ```bash
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/src
-git clone <link-do-repositorio> Localiza-o-Robotica
+git clone <link-do-repositorio>
 ```
 
 Somente depois disso compile o workspace:
