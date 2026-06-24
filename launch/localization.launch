@@ -34,13 +34,13 @@
   </group>
 
   <group if="$(eval arg(&quot;mode&quot;) == &quot;odom&quot;)">
-    <rosparam command="load" file="$(find localiza_o_robotica)/config/ekf_odom.yaml"/>
+    <rosparam command="load" ns="ekf_localization" file="$(find localiza_o_robotica)/config/ekf_odom.yaml"/>
   </group>
   <group if="$(eval arg(&quot;mode&quot;) == &quot;odom_imu&quot;)">
-    <rosparam command="load" file="$(find localiza_o_robotica)/config/ekf_odom_imu.yaml"/>
+    <rosparam command="load" ns="ekf_localization" file="$(find localiza_o_robotica)/config/ekf_odom_imu.yaml"/>
   </group>
   <group if="$(eval arg(&quot;mode&quot;) == &quot;odom_imu_gps&quot;)">
-    <rosparam command="load" file="$(find localiza_o_robotica)/config/ekf_odom_imu_gps.yaml"/>
+    <rosparam command="load" ns="ekf_localization" file="$(find localiza_o_robotica)/config/ekf_odom_imu_gps.yaml"/>
   </group>
 
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" output="screen"/>

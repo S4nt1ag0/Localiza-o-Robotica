@@ -17,6 +17,6 @@
     <arg name="output_dir"     value="$(arg output_dir)"/>
   </include>
 
-  <node pkg="rosbag" type="play" name="play_trajectory" output="screen" required="true"
+  <node pkg="rosbag" type="play" name="play_trajectory" output="log" required="true"
         args="--clock --delay=4.0 --rate=$(arg rate) $(arg bag)"/>
 </launch>

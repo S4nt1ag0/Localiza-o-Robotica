@@ -18,6 +18,7 @@ catkin_install_python(PROGRAMS
   scripts/gt_odom_publisher.py
   scripts/localization_metrics.py
   scripts/compare_results.py
+  scripts/run_replay.sh
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

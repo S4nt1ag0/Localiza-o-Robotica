@@ -127,18 +127,19 @@ roslaunch localiza_o_robotica record_trajectory.launch \
 
 Manipule o robo com o joystick gerado no Terminal 3. Depois de um tempo, pare a gravacao no Terminal 4 com `Ctrl+C`. O bag vai conter os topicos normalizados `/wheel/odom`, `/imu/data`, `/fix` e `/gt/odom`.
 
-## Executando os testes
+## Executando os testes com a bag
 
-Para comparar os tres modos de localizacao, use o script:
+Para reproduzir a bag ja gravada e comparar os tres modos de localizacao, nao e necessario abrir Gazebo, subir o mundo, usar `rqt_robot_steering` ou iniciar `roscore` manualmente. O `roslaunch` usado pelo script inicia o master ROS quando precisar, executa a bag e encerra tudo no final.
+
+Use um unico terminal com o ambiente carregado:
 
 ```bash
 cd ~/catkin_ws
 source devel/setup.bash
 rosrun localiza_o_robotica run_replay.sh
-rosrun localiza_o_robotica compare_results.py
 ```
 
-O script executa automaticamente os modos:
+O script limpa os resultados antigos desses modos, executa automaticamente:
 
 - `odom`
 - `odom_imu`
