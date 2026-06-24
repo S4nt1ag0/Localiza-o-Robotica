@@ -8,15 +8,15 @@
   <param name="/use_sim_time" value="true"/>
 
   <include file="$(find localiza_o_robotica)/launch/localization.launch">
-    <arg name="mode" value="$(arg mode)"/>
+    <arg name="mode"           value="$(arg mode)"/>
     <arg name="wheel_odom_topic" value="/wheel/odom"/>
-    <arg name="imu_topic" value="/imu/data"/>
-    <arg name="fix_topic" value="/fix"/>
-    <arg name="publish_gt" value="false"/>
+    <arg name="imu_topic"      value="/imu/data"/>
+    <arg name="fix_topic"      value="/fix"/>
+    <arg name="publish_gt"     value="false"/>
     <arg name="record_metrics" value="true"/>
-    <arg name="output_dir" value="$(arg output_dir)"/>
+    <arg name="output_dir"     value="$(arg output_dir)"/>
   </include>
 
   <node pkg="rosbag" type="play" name="play_trajectory" output="screen" required="true"
-        args="--clock --delay=2.0 --rate=$(arg rate) $(arg bag)"/>
+        args="--clock --delay=4.0 --rate=$(arg rate) $(arg bag)"/>
 </launch>
