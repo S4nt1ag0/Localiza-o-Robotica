@@ -168,4 +168,24 @@ O script `localization_metrics.py` compara `/odometry/filtered` com `/gt/odom` e
 
 ## Resultados e discussao
 
-Os resultados obtidos ficam versionados em `results/` e permitem comparar o desempenho dos tres modos. Em geral, a configuracao apenas com odometria tende a acumular mais erro ao longo do tempo. A configuracao com odometria + IMU melhora a estimativa de orientacao, enquanto a configuracao com odometria + IMU + GPS tende a reduzir o erro global de posicao por usar uma referencia absoluta convertida para odometria local.
+Os resultados obtidos ficam em `results/` e permitem comparar o desempenho dos tres modos. Na execucao abaixo, os tres filtros tiveram erro de posicao muito parecido, com RMSE em torno de 5,63 m e erro final em torno de 6,05 m. A diferenca mais clara apareceu na orientacao: ao adicionar a IMU, o RMSE de yaw caiu de 0,020987 rad para 0,005610 rad, e com IMU + GPS ficou em 0,004573 rad.
+
+| modo | amostras | RMSE posicao (m) | erro final posicao (m) | RMSE yaw (rad) | erro final yaw (rad) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `odom` | 2099 | 5.629646 | 6.050049 | 0.020987 | 0.000079 |
+| `odom_imu` | 2098 | 5.630747 | 6.048574 | 0.005610 | 0.000186 |
+| `odom_imu_gps` | 2099 | 5.631216 | 6.050032 | 0.004573 | 0.000079 |
+
+Neste teste, o GPS nao reduziu significativamente o erro de posicao. Isso pode acontecer quando a conversao do GPS para odometria local usa uma origem simples e quando a trajetoria gravada, os ruidos/covariancias e o proprio filtro deixam a estimativa dominada pela odometria das rodas. Mesmo assim, o modo `odom_imu_gps` manteve o melhor RMSE de yaw entre as tres configuracoes.
+
+O grafico de erro de posicao mostra que as tres curvas ficam muito proximas durante quase todo o replay:
+
+![Comparacao do erro de posicao](results/comparison_position_error.png)
+
+O grafico de erro de yaw evidencia melhor a vantagem dos modos com IMU:
+
+![Comparacao do erro de yaw](results/comparison_yaw_error.png)
+
+Por fim, o grafico de trajetorias compara a estimativa filtrada de cada modo com o ground truth usado apenas para avaliacao:
+
+![Comparacao das trajetorias](results/comparison_trajectories.png)
