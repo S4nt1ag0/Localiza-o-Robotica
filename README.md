@@ -28,7 +28,7 @@ docker run -it \
   <sua_imagem>
 ```
 
-Substitua `<sua_imagem>` pelo nome da imagem gerada no passo anterior, por exemplo `localiza_o_robotica_ros`.
+Substitua `<sua_imagem>` pelo nome da imagem gerada no passo anterior, por exemplo `ros_lar_run`.
 
 No host, antes de abrir interfaces graficas pelo Docker, libere o acesso ao X11:
 
