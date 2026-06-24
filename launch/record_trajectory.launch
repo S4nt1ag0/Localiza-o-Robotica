@@ -27,4 +27,7 @@
 
   <node pkg="rosbag" type="record" name="record_trajectory" output="screen"
         args="-O $(arg bag) /clock /wheel/odom /imu/data /fix /gt/odom"/>
+
+  <node pkg="rosservice" type="rosservice" name="auto_unpause"
+      args="call --wait /gazebo/unpause_physics" />
 </launch>
