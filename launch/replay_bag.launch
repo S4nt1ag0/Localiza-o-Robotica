@@ -11,7 +11,7 @@
     <arg name="mode"           value="$(arg mode)"/>
     <arg name="wheel_odom_topic" value="/wheel/odom"/>
     <arg name="imu_topic"      value="/imu/data"/>
-    <arg name="fix_topic"      value="/fix"/>
+    <arg name="fix_topic"      value="/navsat/fix"/>
     <arg name="publish_gt"     value="false"/>
     <arg name="record_metrics" value="true"/>
     <arg name="output_dir"     value="$(arg output_dir)"/>

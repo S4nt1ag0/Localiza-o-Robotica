@@ -3,7 +3,7 @@
   <arg name="bag" default="$(find localiza_o_robotica)/bags/husky_trajectory.bag"/>
   <arg name="wheel_odom_topic" default="/husky_velocity_controller/odom"/>
   <arg name="imu_topic" default="/imu/data"/>
-  <arg name="fix_topic" default="/fix"/>
+  <arg name="fix_topic" default="/navsat/fix"/>
   <arg name="model_name" default="husky"/>
 
   <group if="$(eval arg(&quot;wheel_odom_topic&quot;) != &quot;/wheel/odom&quot;)">
@@ -26,7 +26,7 @@
   </node>
 
   <node pkg="rosbag" type="record" name="record_trajectory" output="screen"
-        args="-O $(arg bag) /clock /wheel/odom /imu/data /fix /gt/odom"/>
+        args="-O $(arg bag) /clock /wheel/odom /imu/data /navsat/fix /gt/odom"/>
 
   <node pkg="rosservice" type="rosservice" name="auto_unpause"
       args="call --wait /gazebo/unpause_physics" />

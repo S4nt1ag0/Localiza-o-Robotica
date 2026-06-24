@@ -3,7 +3,7 @@
   <arg name="mode" default="odom" doc="odom, odom_imu ou odom_imu_gps"/>
   <arg name="wheel_odom_topic" default="/husky_velocity_controller/odom"/>
   <arg name="imu_topic" default="/imu/data"/>
-  <arg name="fix_topic" default="/fix"/>
+  <arg name="fix_topic" default="/navsat/fix"/>
   <arg name="model_name" default="husky"/>
   <arg name="publish_gt" default="true"/>
   <arg name="record_metrics" default="true"/>
@@ -22,7 +22,7 @@
   <group if="$(eval arg(&quot;mode&quot;) == &quot;odom_imu_gps&quot;)">
     <group if="$(eval arg(&quot;fix_topic&quot;) != &quot;/fix&quot;)">
       <node pkg="topic_tools" type="relay" name="relay_fix"
-            args="$(arg fix_topic) /fix"/>
+            args="$(arg fix_topic) /navsat/fix"/>
     </group>
     <node pkg="localiza_o_robotica" type="gps_to_odom.py" name="gps_to_odom" output="screen"/>
   </group>
