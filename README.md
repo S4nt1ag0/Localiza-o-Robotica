@@ -1,4 +1,4 @@
-# Localiza-o-Robotica
+# Localiza-o-Robotica - Atividade 2
 
 Pacote ROS para comparar tres configuracoes de localizacao do Clearpath Husky no Gazebo usando o `ekf_localization_node` do pacote `robot_localization`:
 
